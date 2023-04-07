@@ -9,7 +9,7 @@ async function createDoctor({name, email, password, specialty, state, city, addr
     });
 }
 
-async function findByEmail(email:string): DoctorPromiseType{
+async function findByEmail(email:string){
     return await connection.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
 }
 
