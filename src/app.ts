@@ -18,5 +18,6 @@ const server = app.listen(port, () =>{
 })
 
 server.on('error', (error: Error) =>{
+    console.log(error)
     return console.log("Unable to listen to server");
 })
