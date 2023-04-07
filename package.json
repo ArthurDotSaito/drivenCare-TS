@@ -1,0 +1,46 @@
+{
+  "name": "projeto19-drivencare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
+    "test": "nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ArthurDotSaito/drivenCare.git"
+  },
+  "author": "ArthurSaito",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArthurDotSaito/drivenCare/issues"
+  },
+  "homepage": "https://github.com/ArthurDotSaito/drivenCare#readme",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-status": "^1.6.2",
+    "joi": "^17.9.1",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22",
+    "pg": "^8.10.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/pg": "^8.6.6",
+    "ts-node": "^10.9.1",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.4"
+  }
+}
