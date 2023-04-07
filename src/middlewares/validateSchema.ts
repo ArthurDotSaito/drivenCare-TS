@@ -1,7 +1,9 @@
-import err from '../errors/index.js'
+import err from '../errors/index.js';
+import { Request, Response, NextFunction } from 'express';
+import { ObjectSchema } from 'joi';
 
-export function validadeSchema(schema){
-    return (req,res,next) =>{
+export function validadeSchema(schema: ObjectSchema<any>){
+    return (req: Request,res: Response,next: NextFunction) =>{
         console.log("tentei validar o schema");
         const { error } = schema.validate(req.body, { abortEarly: false });
         if(error){
@@ -12,4 +14,5 @@ export function validadeSchema(schema){
         next();
     }
 }
+
 

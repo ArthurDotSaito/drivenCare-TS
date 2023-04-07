@@ -10,4 +10,3 @@ routes.use("/doctors", doctorRoutes);
 routes.use("/appointments", appointmentRoutes);
 
 export default routes;
-

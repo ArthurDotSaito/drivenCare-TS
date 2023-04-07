@@ -1,6 +1,7 @@
 import connection from '../config/databaseConnection.js'
+import { DoctorPromiseType, DoctorRegistration } from '../types/doctorTypes.js';
 
-async function createDoctor({name, email, password, specialty, state, city, address}){
+async function createDoctor({name, email, password, specialty, state, city, address}: DoctorRegistration):Promise<void>{
     await connection.query({
         text:`INSERT INTO doctors (name, email, password, specialty, state, city, address) 
         VALUES ($1, $2, $3, $4, $5 ,$6, $7 )`,
@@ -8,23 +9,23 @@ async function createDoctor({name, email, password, specialty, state, city, addr
     });
 }
 
-async function findByEmail(email){
+async function findByEmail(email:string): DoctorPromiseType{
     return await connection.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
 }
 
-async function findById(id){
+async function findById(id:string): DoctorPromiseType{
     return await connection.query(`SELECT * FROM doctors WHERE id = $1`, [id]);
 }
 
-async function findByName(name) {
+async function findByName(name:string) : DoctorPromiseType{
     return await connection.query(` SELECT id, name, specialty, state, city, address FROM doctors WHERE name LIKE $1`,[name]);
 }
 
-async function findByLocation(city) {
+async function findByLocation(city:string): DoctorPromiseType{
     return await connection.query(` SELECT id, name, specialty, state, city, address FROM doctors WHERE city LIKE $1`,[city]);
 }
 
-async function findBySpecialty(specialty) {
+async function findBySpecialty(specialty:string): DoctorPromiseType{
     return await connection.query(` SELECT id, name, specialty, state, city, address FROM doctors WHERE specialty LIKE $1`,[specialty]);
 }
 
