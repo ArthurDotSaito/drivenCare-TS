@@ -1,6 +1,7 @@
 import appointmentServices from "../services/appointmentServices.js";
+import { Request, Response, NextFunction } from "express";
 
-async function createAppointment(req, res, next){
+async function createAppointment(req: Request, res: Response, next: NextFunction){
     const { doctorId, day, hour} = req.body;
     const user = res.locals.user;
 
@@ -12,7 +13,7 @@ async function createAppointment(req, res, next){
     }
 }
 
-async function verifyPatientScheduledAppointments(req, res, next){
+async function verifyPatientScheduledAppointments(req: Request, res: Response, next: NextFunction){
     const user = res.locals.user;
     try{
         const {rows: schedule } = await appointmentServices.verifyPatientScheduledAppointments({ userId: user.id});
@@ -22,7 +23,7 @@ async function verifyPatientScheduledAppointments(req, res, next){
     }
 }
 
-async function verifyDoctorScheduledAppointments(req, res, next){
+async function verifyDoctorScheduledAppointments(req: Request, res: Response, next: NextFunction){
     const user = res.locals.user;
     try{
         const {rows: schedule } = await appointmentServices.verifyDoctorScheduledAppointments({ userId: user.id});
@@ -32,7 +33,7 @@ async function verifyDoctorScheduledAppointments(req, res, next){
     }
 }
 
-async function confirmAppointment(req, res, next){
+async function confirmAppointment(req: Request, res: Response, next: NextFunction){
     try{
         const id = Number(req.params.id);
         const user = res.locals.user;
@@ -44,7 +45,7 @@ async function confirmAppointment(req, res, next){
     }
 }
 
-async function cancelAppointment(req, res, next){
+async function cancelAppointment(req: Request, res: Response, next: NextFunction){
     try{
         const id = Number(req.params.id);
         const user = res.locals.user;
@@ -56,7 +57,7 @@ async function cancelAppointment(req, res, next){
     }
 }
 
-async function scheduleHistory(req, res, next){
+async function scheduleHistory(req: Request, res: Response, next: NextFunction){
     try{
         const { patientId } = req.params;
         const { rows: scheduleHistory } = await appointmentServices.scheduleHistory({id: patientId});
@@ -67,7 +68,7 @@ async function scheduleHistory(req, res, next){
     }
 }
 
-async function findDoctorSchedule(req, res, next){
+async function findDoctorSchedule(req: Request, res: Response, next: NextFunction){
     try{
         const { doctorId } = req.params;
         const { rows: schedule } = await appointmentServices.findDoctorSchedule({id: doctorId})
