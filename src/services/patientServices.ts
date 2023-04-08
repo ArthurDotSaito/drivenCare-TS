@@ -4,9 +4,12 @@ import errors from '../errors/index.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import { PatientRegistry } from '../types/patientTypes.js';
+import { LoginType } from '../types/loginTypes.js';
+import { DoctorsByLocation, DoctorsByName, DoctorsBySpecialty} from '../types/doctorTypes.js';
 
 
-async function createPatient({name, email, password}){
+async function createPatient({name, email, password}:PatientRegistry){
     const { rowCount } = await patientRepositories.findByEmail(email);
     if (rowCount) throw errors.duplicatedEmailError(email);
 
@@ -15,33 +18,33 @@ async function createPatient({name, email, password}){
     await patientRepositories.createPatient({name, email, password: hashPassword});
 }
 
-async function signIn({email, password}){
+async function signIn({email, password}:LoginType){
     const {rowCount, rows: [user]} = await patientRepositories.findByEmail(email);
     if(!rowCount) throw errors.invalidCredentialError();
 
     const validPassword = await bcrypt.compare(password, user.password);
     if(!validPassword) throw errors.invalidCredentialError();
 
-    const token = jwt.sign({userId: user.id}, process.env.SECRET_JWT);
+    const token = jwt.sign({userId: user.id}, String(process.env.SECRET_JWT));
 
     return token
 }
 
-async function doctorsByName({name}){
+async function doctorsByName({name}:DoctorsByName){
     const doctorName = `%${name}%`;
     const doctors = await doctorRepositories.findByName(doctorName);
 
     return doctors
 }
 
-async function doctorsByLocation({city}){
+async function doctorsByLocation({city}:DoctorsByLocation){
     const doctorCity = `%${city}%`;
     const doctors = await doctorRepositories.findByLocation(doctorCity);
 
     return doctors
 }
 
-async function doctorsBySpecialty({specialty}){
+async function doctorsBySpecialty({specialty}:DoctorsBySpecialty){
     const doctorSpecialty = `%${specialty}%`;
     const doctors = await doctorRepositories.findBySpecialty(doctorSpecialty);
 

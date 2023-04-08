@@ -10,6 +10,18 @@ export type DoctorRegistration = {
     address: string
 }
 
+export type DoctorsByName = {
+    name:string
+}
+
+export type DoctorsByLocation = {
+    city:string
+}
+
+export type DoctorsBySpecialty = {
+    specialty:string
+}
+
 type DoctorPromise = {
     id:number,
     email:string,
