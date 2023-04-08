@@ -1,10 +1,11 @@
 import httpStatus from "http-status";
+import { Request, Response, NextFunction} from "express";
 
-export function handleApplicationErrors(err, req, res, next) {
+export function handleApplicationErrors(err:Error, req:Request, res:Response, next:NextFunction) {
   if (err.name === "UnprocessableEntityError" || err.name === "duplicateEmailError") {
     return res
       .status(httpStatus.CONFLICT)
-      .send({ message: err.message, email: err.email });
+      .send({ message: err.message});
   }
 
   if (err.name === "InvalidCredentialError") {

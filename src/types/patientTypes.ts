@@ -6,6 +6,10 @@ export type PatientRegistry = {
     password:string
 }
 
+export type PatientId = {
+    userId: string
+}
+
 type PatientPromise = {
     id:number,
     name:string,

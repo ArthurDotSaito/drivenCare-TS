@@ -13,7 +13,7 @@ async function findByEmail(email:string){
     return await connection.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
 }
 
-async function findById(id:string): DoctorPromiseType{
+async function findById(id:number): DoctorPromiseType{
     return await connection.query(`SELECT * FROM doctors WHERE id = $1`, [id]);
 }
 

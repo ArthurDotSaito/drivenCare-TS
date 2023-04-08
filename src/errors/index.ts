@@ -1,11 +1,11 @@
-function unprocessableEntity(message){
+function unprocessableEntity(message:string){
     return{
         name: "UnprocessableEntityError",
         message
     };
 }
 
-function duplicatedEmailError(email){
+function duplicatedEmailError(email:string){
     return{
         name:"duplicateEmailError",
         message:"There is another user with given e-mail",
@@ -62,4 +62,5 @@ export default{
     unauthorizedError,
     duplicatedAppointmentError, 
     appointmentNotFound,
-    patientNotFound}
+    patientNotFound,
+    doctorNotFound}

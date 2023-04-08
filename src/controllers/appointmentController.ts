@@ -1,8 +1,9 @@
 import appointmentServices from "../services/appointmentServices.js";
 import { Request, Response, NextFunction } from "express";
+import { CreateAppointmentType } from "../types/appointmentTypes.js";
 
 async function createAppointment(req: Request, res: Response, next: NextFunction){
-    const { doctorId, day, hour} = req.body;
+    const {doctorId, day, hour} = req.body as CreateAppointmentType;
     const user = res.locals.user;
 
     try{
@@ -59,7 +60,7 @@ async function cancelAppointment(req: Request, res: Response, next: NextFunction
 
 async function scheduleHistory(req: Request, res: Response, next: NextFunction){
     try{
-        const { patientId } = req.params;
+        const  patientId  = Number(req.params.patientId);
         const { rows: scheduleHistory } = await appointmentServices.scheduleHistory({id: patientId});
         
         return res.send({scheduleHistory})
@@ -70,7 +71,7 @@ async function scheduleHistory(req: Request, res: Response, next: NextFunction){
 
 async function findDoctorSchedule(req: Request, res: Response, next: NextFunction){
     try{
-        const { doctorId } = req.params;
+        const  doctorId  = Number(req.params.doctorId);
         const { rows: schedule } = await appointmentServices.findDoctorSchedule({id: doctorId})
         
         return res.send({schedule})
