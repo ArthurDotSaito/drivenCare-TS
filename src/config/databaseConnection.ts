@@ -5,11 +5,10 @@ dotenv.config();
 const { Pool } = pg;
 
 const connection = new Pool({
-  host:'localhost',
-  port: 5432,
-  user:'postgres',
-  password:'artmar1311',
-  database:'drivenCareDB'
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 connection.query('SELECT NOW()', (err, res) => {
