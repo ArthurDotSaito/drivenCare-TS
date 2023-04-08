@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/app.ts",
+    "start": "node dist/app.js",
     "dev": "tsx watch ./src/app.ts",
     "test": "nodemon ./src/app.js"
   },
