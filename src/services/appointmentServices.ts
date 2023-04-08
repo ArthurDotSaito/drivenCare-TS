@@ -35,6 +35,14 @@ async function cancelAppointment({userId, id}:FindAndConfirmOrCancelType){
     await appointmentRepositories.cancelAppointment({status:true, userId, id})
 }
 
+async function deleteAppointment({userId, id}:FindAndConfirmOrCancelType){
+    const {rowCount} = await appointmentRepositories.findAppointmentById({status:true, userId, id});
+    if(!rowCount) throw errors.appointmentNotFound();
+
+    await appointmentRepositories.deleteAppointment({userId, id})
+}
+
+
 async function scheduleHistory({ id }:FindScheduleType){
     const day = dayjs().format("YYYY-MM-DD");
 
@@ -59,4 +67,5 @@ export default {
     confirmAppointment,
     cancelAppointment,
     scheduleHistory,
-    findDoctorSchedule}
+    findDoctorSchedule,
+    deleteAppointment}

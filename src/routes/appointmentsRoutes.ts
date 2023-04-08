@@ -14,6 +14,7 @@ appointmentRoutes.get("/doctors", authentication("doctor"), appointmentControlle
 appointmentRoutes.get("/doctors/:patientId", authentication("doctor"), appointmentController.scheduleHistory);
 appointmentRoutes.post("/doctors/confirm/:id", authentication("doctor"), appointmentController.confirmAppointment);
 appointmentRoutes.post("/doctors/cancel/:id", authentication("doctor"), appointmentController.cancelAppointment);
+appointmentRoutes.delete("/doctors/delete/:id", authentication("doctor"), appointmentController.cancelAppointment);
 
 
 
