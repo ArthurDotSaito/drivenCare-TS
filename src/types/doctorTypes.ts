@@ -22,6 +22,10 @@ export type DoctorsBySpecialty = {
     specialty:string
 }
 
+export type DoctorId = {
+    userId: string
+}
+
 type DoctorPromise = {
     id:number,
     email:string,

@@ -12,7 +12,7 @@ async function findByEmail(email:String){
     return await connection.query(`SELECT * FROM patients WHERE email = $1`, [email]);
 }
 
-async function findById(id:string):Promise<PatientPromiseType>{
+async function findById(id:number):Promise<PatientPromiseType>{
     return await connection.query(`SELECT * FROM patients WHERE id = $1`, [id]);
 }
 

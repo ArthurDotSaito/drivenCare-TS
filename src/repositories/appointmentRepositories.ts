@@ -1,6 +1,7 @@
 import connection from "../config/databaseConnection.js";
+import { CreateAppointmentType, FindAndConfirmOrCancelType, FindScheduleType, VerifyPatientAppointmentType } from "../types/appointmentTypes.js";
 
-async function findDuplicate({doctorId, day, hour}){
+async function findDuplicate({doctorId, day, hour}:CreateAppointmentType){
     return await connection.query({
         text: `SELECT * FROM appointments WHERE doctor_id = $1 and appointmentday = $2
         AND (appointmenthour BETWEEN $3::time without time zone - INTERVAL '59 minutes' AND $3::time without time zone + INTERVAL '59 minutes')`,
@@ -8,14 +9,14 @@ async function findDuplicate({doctorId, day, hour}){
     })
 }
 
-async function createAppointment({userId, doctorId, day, hour }){
+async function createAppointment({userId, doctorId, day, hour }:CreateAppointmentType){
     return await connection.query({
         text:`INSERT INTO appointments (patient_id, doctor_id, appointmenthour, appointmentday) VALUES ($1, $2, $3, $4)`,
         values:[userId, doctorId, hour, day]
     })
 }
 
-async function verifyPatientScheduledAppointments({date, userId}){
+async function verifyPatientScheduledAppointments({day, userId}:VerifyPatientAppointmentType){
     return await connection.query({
         text:
         `
@@ -28,11 +29,11 @@ async function verifyPatientScheduledAppointments({date, userId}){
         WHERE a.patient_id = $1 AND a.appointmentday >= $2
         ORDER BY a.appointmenthour ASC
         `,
-        values:[userId, date]
+        values:[userId, day]
     });
 }
 
-async function verifyDoctorScheduledAppointments({date, userId}){
+async function verifyDoctorScheduledAppointments({day, userId}:VerifyPatientAppointmentType){
     return await connection.query({
         text:
         `
@@ -45,25 +46,25 @@ async function verifyDoctorScheduledAppointments({date, userId}){
         WHERE a.doctor_id = $1 AND a.appointmentday >= $2
         ORDER BY a.appointmenthour ASC
         `,
-        values:[userId, date]
+        values:[userId, day]
     });
 }
 
-async function findAppointmentById({status, userId, id}){
+async function findAppointmentById({status, userId, id}:FindAndConfirmOrCancelType){
     return await connection.query({
         text:`SELECT * FROM appointments WHERE confirmed=$1 AND doctor_id=$2 AND id = $3`,
         values:[status, userId, id]
     });
 }
 
-async function confirmAppointment({status, userId, id}){
+async function confirmAppointment({status, userId, id}:FindAndConfirmOrCancelType){
     return await connection.query({
         text:`UPDATE appointments SET confirmed=$1 WHERE doctor_id=$2 AND id=$3`,
         values:[status, userId, id]
     });
 }
 
-async function cancelAppointment({status, userId, id}){
+async function cancelAppointment({status, userId, id}:FindAndConfirmOrCancelType){
     console.log("cancel")
     return await connection.query({
         text:`UPDATE appointments SET canceled=$1 WHERE doctor_id=$2 AND id=$3`,
@@ -71,7 +72,7 @@ async function cancelAppointment({status, userId, id}){
     });
 }
 
-async function scheduleHistory({id, date, confirmed, canceled}){
+async function scheduleHistory({id, day, confirmed, canceled}:FindScheduleType){
     return await connection.query({
         text: `
         SELECT 
@@ -83,11 +84,11 @@ async function scheduleHistory({id, date, confirmed, canceled}){
         WHERE a.patient_id = $1 AND a.appointmentday >= $2 AND a.confirmed= $3 AND a.canceled = $4
         ORDER BY a.appointmenthour ASC
         `,
-        values:[id, date, confirmed, canceled]
+        values:[id, day, confirmed, canceled]
     })
 }
 
-async function findDoctorSchedule({id, date}){
+async function findDoctorSchedule({id, day}:FindScheduleType){
     return await connection.query({
         text:`SELECT a.id, d.name as doctor, d.specialty, a.appointmentday AS day, a.appointmenthour AS hour,
         a.confirmed
@@ -95,7 +96,7 @@ async function findDoctorSchedule({id, date}){
         JOIN doctors d ON d.id = a.doctor_id
         WHERE a.doctor_id = $1 AND a.appointmentday >= $2
         ORDER BY a.appointmentday ASC`,
-        values:[id, date]
+        values:[id, day]
     })
 }
 
