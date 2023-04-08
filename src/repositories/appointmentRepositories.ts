@@ -65,10 +65,16 @@ async function confirmAppointment({status, userId, id}:FindAndConfirmOrCancelTyp
 }
 
 async function cancelAppointment({status, userId, id}:FindAndConfirmOrCancelType){
-    console.log("cancel")
     return await connection.query({
         text:`UPDATE appointments SET canceled=$1 WHERE doctor_id=$2 AND id=$3`,
         values:[status, userId, id]
+    });
+}
+
+async function deleteAppointment({userId, id}:FindAndConfirmOrCancelType){
+    return await connection.query({
+        text:`DELETE FROM appointments WHERE doctor_id=$1 AND id=$2`,
+        values:[userId, id]
     });
 }
 
@@ -109,4 +115,5 @@ export default {
     confirmAppointment,
     cancelAppointment,
     scheduleHistory,
-    findDoctorSchedule}
+    findDoctorSchedule,
+    deleteAppointment}

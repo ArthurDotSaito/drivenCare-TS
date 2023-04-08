@@ -58,6 +58,18 @@ async function cancelAppointment(req: Request, res: Response, next: NextFunction
     }
 }
 
+async function deleteAppointment(req: Request, res: Response, next: NextFunction){
+    try{
+        const id = Number(req.params.id);
+        const user = res.locals.user;
+
+        await appointmentServices.deleteAppointment({userId: user.id, id})
+        return res.sendStatus(202);
+    }catch(err){
+        next(err)
+    }
+}
+
 async function scheduleHistory(req: Request, res: Response, next: NextFunction){
     try{
         const  patientId  = Number(req.params.patientId);
@@ -87,4 +99,5 @@ export default {
     confirmAppointment,
     cancelAppointment,
     scheduleHistory,
-    findDoctorSchedule}
+    findDoctorSchedule,
+    deleteAppointment}
