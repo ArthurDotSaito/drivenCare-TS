@@ -1,8 +1,10 @@
 import patientServices from '../services/patientServices.js';
 import { Request, Response, NextFunction } from 'express';
+import { PatientRegistry } from '../types/patientTypes.js';
+import { LoginType } from '../types/loginTypes.js';
 
 async function createPatient(req: Request, res: Response, next: NextFunction){
-    const {name, email, password} = req.body
+    const {name, email, password} = req.body as PatientRegistry
     try{
         await patientServices.createPatient({name, email, password});
         return res.sendStatus(201);
@@ -12,7 +14,7 @@ async function createPatient(req: Request, res: Response, next: NextFunction){
 }
 
 async function signIn(req: Request, res: Response, next: NextFunction){
-    const {email, password} = req.body;
+    const {email, password} = req.body as LoginType;
     try{
         const token = await patientServices.signIn({email, password});
         return res.send({token});

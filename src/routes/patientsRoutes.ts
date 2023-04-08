@@ -8,9 +8,9 @@ const patientRoutes = Router();
 
 patientRoutes.post("/signUp", validadeSchema(signUpSchema), patientController.createPatient);
 patientRoutes.post("/signIn", patientController.signIn);
-patientRoutes.get('doctor/doctor-by-name/:name', authentication("patient"), patientController.doctorsByName);
-patientRoutes.get('doctor/doctor-by-location/:city', authentication("patient"), patientController.doctorsByLocation);
-patientRoutes.get('doctor/doctor-by-specialty/:specialty', authentication("patient"), patientController.doctorsBySpecialty);
-patientRoutes.get('doctor/:doctorId/availability/:date')
+patientRoutes.get("/doctor/doctor-by-name/:name", authentication("patient"), patientController.doctorsByName);
+patientRoutes.get('/doctor/doctor-by-location/:city', authentication("patient"), patientController.doctorsByLocation);
+patientRoutes.get('/doctor/doctor-by-specialty/:specialty', authentication("patient"), patientController.doctorsBySpecialty);
+patientRoutes.get('/doctor/:doctorId/availability/:date')
 
 export default patientRoutes;
