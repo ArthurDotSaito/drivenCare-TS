@@ -40,6 +40,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/pg": "^8.6.6",
     "ts-node": "^10.9.1",
+    "tsc": "^2.0.4",
     "tsx": "^3.12.6",
     "typescript": "^5.0.4"
   }
