@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "tsx watch ./src/app.ts",
-    "test": "nodemon ./src/app.js"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
